@@ -20,7 +20,7 @@ const config = {
 	// отвечает за > на новой строке
 	// singleAttributePerLine: true,
 	bracketSameLine: false,
-	jsxBracketSameLine: true,
+	jsxBracketSameLine: false,
 	importOrder: [
 		"<THIRD_PARTY_MODULES>",
 		"^@entities/(.*)$",

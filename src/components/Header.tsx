@@ -2,6 +2,8 @@
 
 import { useRouter } from 'next/navigation'
 import { PropsWithChildren } from 'react'
+import { BiSearch } from 'react-icons/bi'
+import { HiHome } from 'react-icons/hi'
 import { RxCaretLeft, RxCaretRight } from 'react-icons/rx'
 import { twMerge } from 'tailwind-merge'
 
@@ -37,6 +39,25 @@ const Header = ({ className, children }: HeaderProps) => {
 							size={35}
 						/>
 					</button>
+				</div>
+
+				{/* mobile version */}
+				<div className='flex items-center gap-2 md:hidden'>
+					<button className='flex items-center justify-center rounded-full bg-white p-2 transition hover:opacity-75'>
+						<HiHome
+							className='text-black'
+							size={20}
+						/>
+					</button>
+					<button className='flex items-center justify-center rounded-full bg-white p-2 transition hover:opacity-75'>
+						<BiSearch
+							className='text-black'
+							size={20}
+						/>
+					</button>
+				</div>
+				<div className='flex '>
+					 
 				</div>
 			</div>
 		</div>

@@ -7,6 +7,8 @@ import { HiHome } from 'react-icons/hi'
 import { RxCaretLeft, RxCaretRight } from 'react-icons/rx'
 import { twMerge } from 'tailwind-merge'
 
+import Button from './Button'
+
 interface HeaderProps extends PropsWithChildren {
 	className?: string
 }
@@ -56,10 +58,20 @@ const Header = ({ className, children }: HeaderProps) => {
 						/>
 					</button>
 				</div>
-				<div className='flex '>
-					 
+				<div className='flex items-center justify-between gap-4'>
+					<>
+						<div>
+							<Button className='bg-transparent font-medium text-neutral-300'>
+								Sign up
+							</Button>
+						</div>
+						<div>
+							<Button className='bg-white px-6 py-2'>Log in</Button>
+						</div>
+					</>
 				</div>
 			</div>
+			{children}
 		</div>
 	)
 }

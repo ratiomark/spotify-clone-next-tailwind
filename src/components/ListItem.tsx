@@ -18,7 +18,8 @@ const ListItem = ({ image, name, href }: ListItemProps) => {
 	return (
 		<button
 			className='group relative flex items-center gap-x-4 overflow-hidden rounded-md bg-neutral-100/10 pr-4 transition hover:bg-neutral-100/20'
-			onClick={onClick}>
+			onClick={onClick}
+		>
 			<div className='relative min-h-[64px] min-w-[64px] '>
 				<Image
 					className='object-cover'

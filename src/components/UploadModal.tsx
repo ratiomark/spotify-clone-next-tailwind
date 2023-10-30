@@ -1,7 +1,7 @@
 'use client'
 
 import Modal from '@/components/Modal'
-import useAuthModal from '@/hooks/useAuthModal'
+import useUploadModal from '@/hooks/useUploadModal'
 import {
 	useSessionContext,
 	useSupabaseClient,
@@ -11,8 +11,8 @@ import { ThemeSupa } from '@supabase/auth-ui-shared'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
-const AuthModal = () => {
-	const { isOpen, onClose, onOpen } = useAuthModal()
+const UploadModal = () => {
+	const { isOpen, onClose, onOpen } = useUploadModal()
 	const supabaseClient = useSupabaseClient()
 	const router = useRouter()
 	const { session } = useSessionContext()
@@ -30,8 +30,8 @@ const AuthModal = () => {
 
 	return (
 		<Modal
-			title='Welcome back'
-			description='Login to your account'
+			title='Add a song'
+			description='Upload an mp3 file'
 			isOpen={isOpen}
 			onChange={onChange}
 		>
@@ -55,4 +55,4 @@ const AuthModal = () => {
 		</Modal>
 	)
 }
-export default AuthModal
+export default UploadModal

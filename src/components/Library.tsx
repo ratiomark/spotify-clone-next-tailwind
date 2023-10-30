@@ -1,5 +1,8 @@
 'use client'
 
+import useAuthModal from '@/hooks/useAuthModal'
+import useUploadModal from '@/hooks/useUploadModal'
+import { useUser } from '@/hooks/useUser'
 import {
 	SIZE_ICON_ADD_NEW_SONG,
 	SIZE_ICON_DEFAULT,
@@ -8,7 +11,14 @@ import { AiOutlinePlus } from 'react-icons/ai'
 import { TbPlaylist } from 'react-icons/tb'
 
 const Library = () => {
-	const onClick = () => {}
+	const authModal = useAuthModal()
+	const uploadModal = useUploadModal()
+	const { user } = useUser()
+
+	const onClick = () => {
+		if (!user) return authModal.onOpen()
+		return uploadModal.onOpen()
+	}
 	return (
 		<div className='flex flex-col'>
 			<div className='flex items-center justify-between px-5 pt-4'>

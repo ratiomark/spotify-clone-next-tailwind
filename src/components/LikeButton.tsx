@@ -10,15 +10,19 @@ import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 
 interface LikeButtonProps {
 	songId: string
+	isLikedByDefault?: boolean
 }
 
-const LikeButton: React.FC<LikeButtonProps> = ({ songId }) => {
+const LikeButton: React.FC<LikeButtonProps> = ({
+	isLikedByDefault = false,
+	songId,
+}) => {
 	const router = useRouter()
 	const { supabaseClient } = useSessionContext()
 	const authModal = useAuthModal()
 	const { user } = useUser()
 
-	const [isLiked, setIsLiked] = useState<boolean>(false)
+	const [isLiked, setIsLiked] = useState<boolean>(isLikedByDefault)
 
 	useEffect(() => {
 		if (!user?.id) {

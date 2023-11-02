@@ -31,11 +31,12 @@ const LikedContent: React.FC<LikedContentProps> = ({ songs }) => {
           flex 
           w-full 
           flex-col 
-          gap-y-2 px-6 
+          gap-y-2 
+					px-6 
           text-neutral-400
         '
 			>
-				No liked songs.
+				No liked songs
 			</div>
 		)
 	}
@@ -52,7 +53,10 @@ const LikedContent: React.FC<LikedContentProps> = ({ songs }) => {
 							data={song}
 						/>
 					</div>
-					<LikeButton songId={song.id} />
+					<LikeButton
+						isLikedByDefault={true}
+						songId={song.id}
+					/>
 				</div>
 			))}
 		</div>

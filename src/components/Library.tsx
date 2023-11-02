@@ -7,10 +7,16 @@ import {
 	SIZE_ICON_ADD_NEW_SONG,
 	SIZE_ICON_DEFAULT,
 } from '@/shared/constants/sizes'
+import { Song } from '@/shared/types/types'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { TbPlaylist } from 'react-icons/tb'
+import MediaItem from './MediaItem'
 
-const Library = () => {
+interface LibraryProps {
+	songs: Song[]
+}
+
+const Library = ({ songs }: LibraryProps) => {
 	const authModal = useAuthModal()
 	const uploadModal = useUploadModal()
 	const { user } = useUser()
@@ -35,7 +41,22 @@ const Library = () => {
 					size={SIZE_ICON_ADD_NEW_SONG}
 				/>
 			</div>
-			<div className='mt-4 flex flex-col gap-2 px-3'>List of Song</div>
+			<div
+				className='
+					mt-4
+					flex
+					flex-col
+					gap-2
+					px-3'
+			>
+				{songs.map((song) => (
+					<MediaItem
+						key={song.id}
+						data={song}
+						onClick={()=>{}}
+					/>
+				))}
+			</div>
 		</div>
 	)
 }

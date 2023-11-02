@@ -1,5 +1,6 @@
 'use client'
 
+import { Song } from '@/shared/types/types'
 import { usePathname } from 'next/navigation'
 import { PropsWithChildren, useMemo } from 'react'
 import { BiSearch } from 'react-icons/bi'
@@ -9,7 +10,11 @@ import Box from './Box'
 import Library from './Library'
 import SidebarItem from './SidebarItem'
 
-const Sidebar = ({ children }: PropsWithChildren) => {
+interface SideBarProps extends PropsWithChildren {
+	songs: Song[]
+}
+
+const Sidebar = ({ children, songs }: SideBarProps) => {
 	const pathname = usePathname()
 
 	const routes = useMemo(
@@ -44,7 +49,7 @@ const Sidebar = ({ children }: PropsWithChildren) => {
 					</div>
 				</Box>
 				<Box className='h-full overflow-y-auto'>
-					<Library />
+					<Library songs={songs} />
 				</Box>
 			</div>
 			<main className='h-full flex-1 overflow-y-auto py-2'>{children}</main>

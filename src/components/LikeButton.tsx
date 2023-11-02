@@ -81,8 +81,8 @@ const LikeButton: React.FC<LikeButtonProps> = ({ songId }) => {
 		<button
 			className='
         cursor-pointer 
-        transition 
-        hover:opacity-75
+				transition
+				hover:opacity-75
       '
 			onClick={handleLike}
 		>

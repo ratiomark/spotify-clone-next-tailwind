@@ -1,6 +1,7 @@
 'use client'
 
 import useAuthModal from '@/hooks/useAuthModal'
+import useOnPlay from '@/hooks/useOnPlay'
 import useUploadModal from '@/hooks/useUploadModal'
 import { useUser } from '@/hooks/useUser'
 import {
@@ -10,7 +11,8 @@ import {
 import { Song } from '@/shared/types/types'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { TbPlaylist } from 'react-icons/tb'
-import MediaItem from './MediaItem'
+
+import MediaItem from './Items/MediaItem'
 
 interface LibraryProps {
 	songs: Song[]
@@ -20,6 +22,7 @@ const Library = ({ songs }: LibraryProps) => {
 	const authModal = useAuthModal()
 	const uploadModal = useUploadModal()
 	const { user } = useUser()
+	const onPlay = useOnPlay(songs)
 
 	const onClick = () => {
 		if (!user) return authModal.onOpen()
@@ -53,7 +56,7 @@ const Library = ({ songs }: LibraryProps) => {
 					<MediaItem
 						key={song.id}
 						data={song}
-						onClick={()=>{}}
+						onClick={(id: string) => onPlay(id)}
 					/>
 				))}
 			</div>

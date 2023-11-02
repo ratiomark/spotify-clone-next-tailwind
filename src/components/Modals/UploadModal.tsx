@@ -1,6 +1,6 @@
 'use client'
 
-import Modal from '@/components/Modal'
+import Modal from '@/components/Modals/Modal'
 import useUploadModal from '@/hooks/useUploadModal'
 import { useUser } from '@/hooks/useUser'
 import {
@@ -16,8 +16,8 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import uniqid from 'uniqid'
 
-import Button from './Button'
-import Input from './Input'
+import Button from '../Button'
+import Input from '../Input'
 
 const UploadModal = () => {
 	const { isOpen, onClose, onOpen } = useUploadModal()

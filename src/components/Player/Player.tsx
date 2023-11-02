@@ -4,6 +4,8 @@ import useGetSongById from '@/hooks/useGetSongById'
 import useLoadSongUrl from '@/hooks/useLoadSongUrl'
 import usePlayer from '@/hooks/usePlayer'
 
+import PlayerContent from './PlayerContent'
+
 // import PlayerContent from './PlayerContent'
 
 const Player = () => {
@@ -29,6 +31,7 @@ const Player = () => {
       '
 		>
 			<PlayerContent
+				// юзаю key для того чтобы компонент перерендеривался при смене песни, use-sound package не предоставляет такой возможности
 				key={songUrl}
 				song={song}
 				songUrl={songUrl}

@@ -1,8 +1,9 @@
 'use client'
 
 import LikeButton from '@/components/LikeButton'
-import MediaItem from '@/components/MediaItem'
-import SongItem from '@/components/SongItem'
+import MediaItem from '@/components/Items/MediaItem'
+import SongItem from '@/components/Items/SongItem'
+import useOnPlay from '@/hooks/useOnPlay'
 import { Song } from '@/shared/types/types'
 
 interface SearchContentProps {
@@ -10,6 +11,8 @@ interface SearchContentProps {
 }
 
 const SearchContent = ({ songs }: SearchContentProps) => {
+	const onPlay = useOnPlay(songs)
+
 	if (songs.length === 0) {
 		return (
 			<div
@@ -36,7 +39,7 @@ const SearchContent = ({ songs }: SearchContentProps) => {
 				>
 					<div className='flex-1'>
 						<MediaItem
-							// onClick={(id: string) => onPlay(id)}
+							onClick={(id: string) => onPlay(id)}
 							data={song}
 						/>
 					</div>

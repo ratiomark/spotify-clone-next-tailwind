@@ -3,13 +3,13 @@ import { Song } from '@/shared/types/types'
 import Image from 'next/image'
 
 interface MediaItemProps {
-	onClick?: (id: string | number) => void
+	onClick?: (id: string) => void
 	data: Song
 }
 
 const MediaItem = ({ data, onClick }: MediaItemProps) => {
 	const imageUrl = useLoadImage(data)
-	
+
 	const handleClick = () => {
 		if (onClick) {
 			return onClick(data.id)

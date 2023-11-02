@@ -1,44 +1,46 @@
 'use client'
 
 import useLoadImage from '@/hooks/useLoadImage'
+import usePlayer from '@/hooks/usePlayer'
 import { Song } from '@/shared/types/types'
 import Image from 'next/image'
 
-import PlayButton from './PlayButton'
+import PlayButton from '../PlayButton'
 
 interface SongItemProps {
 	data: Song
-	onClick: () => void
+	onClick: (id: string) => void
 }
 const SongItem = ({ data, onClick }: SongItemProps) => {
 	const imagePath = useLoadImage(data)
-
+	// const {setId} = usePlayer()
 	return (
 		<div
 			className='
-			group
-			relative
-			flex
-			cursor-pointer
-			flex-col
-			items-center
-			justify-center
-			gap-4
-			overflow-hidden
-			rounded-md
-			bg-neutral-400/5
-			p-3
-			transition
+				group
+				relative
+				flex
+				cursor-pointer
+				flex-col
+				items-center
+				justify-center
+				gap-4
+				overflow-hidden
+				rounded-md
+				bg-neutral-400/5
+				p-3
+				transition
 			'
+			onClick={() => onClick(data.id)}
 		>
 			<div
 				className='
-				relative
-				aspect-square
-				h-full
-				w-full
-				overflow-hidden
-				rounded-md
+					relative
+					aspect-square
+					h-full
+					w-full
+					overflow-hidden
+					rounded-md
 				'
 			>
 				<Image

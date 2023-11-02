@@ -1,6 +1,6 @@
 import getSongs from '@/actions/getSongs'
 import Header from '@/components/Header'
-import ListItem from '@/components/ListItem'
+import ListItem from '@/components/Items/ListItem'
 import PageContent from '@/app/(site)/components/PageContent'
 
 // как-то влияет на кеширование страницы

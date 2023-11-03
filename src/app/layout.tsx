@@ -1,6 +1,7 @@
 import getSongsByUserId from '@/actions/getSongsByUserId'
 import Player from '@/components/Player/Player'
 import Sidebar from '@/components/Sidebar'
+import { ApolloClientProvider } from '@/providers/ApolloClientProvider'
 import ModalProvider from '@/providers/ModalProvider'
 import PlayerProvider from '@/providers/PlayerProvider'
 import SupabaseProvider from '@/providers/SupabaseProvider'
@@ -30,15 +31,17 @@ export default async function RootLayout({
 		<html lang='en'>
 			<body className={font.className}>
 				<ToasterProvider />
-				<SupabaseProvider>
-					<UserProvider>
-						<ModalProvider />
-						<Sidebar songs={userSongs}>{children}</Sidebar>
-						<PlayerProvider>
-							<Player />
-						</PlayerProvider>
-					</UserProvider>
-				</SupabaseProvider>
+				<ApolloClientProvider>
+					<SupabaseProvider>
+						<UserProvider>
+							<ModalProvider />
+							<Sidebar songs={userSongs}>{children}</Sidebar>
+							<PlayerProvider>
+								<Player />
+							</PlayerProvider>
+						</UserProvider>
+					</SupabaseProvider>
+				</ApolloClientProvider>
 			</body>
 		</html>
 	)

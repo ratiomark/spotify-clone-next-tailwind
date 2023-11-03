@@ -1,7 +1,7 @@
 'use client'
 
 import { useDebouncedValue } from '@/hooks/useDebouncedValue'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import qs from 'query-string'
 import { ChangeEvent, useEffect, useState } from 'react'
 

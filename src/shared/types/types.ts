@@ -1,4 +1,5 @@
-import Stripe from 'stripe'
+import Stripe from 'stripe';
+
 
 export interface Song {
 	id: string
@@ -69,4 +70,33 @@ export interface Subscription {
 	trial_start?: string
 	trial_end?: string
 	prices?: Price
+}
+
+
+
+// ---from spotify api
+
+export type Track = {
+	id: string
+	name: string
+	preview_url?: string | null
+	album: Album
+	artists: Artist[]
+}
+
+export type Album = {
+	id: string
+	name: string
+	images: Image[]
+}
+export type Artist = {
+	id: string
+	name: string
+	images?: Image[]
+}
+
+export type Image = {
+	url: string
+	height?: number
+	width?: number
 }

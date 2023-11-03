@@ -1,0 +1,8 @@
+configurationset:
+  - configuration:
+      name: postgresql_config
+      uri: postgresql://ep-mute-hat-03256602.il-central-1.aws.neon.tech/neondb?user=ratiomark&password=c1u0YbWJIEmN
+  - configuration:
+      name: auth_config
+      client_id: 99240a653c6542cc8e17672c31351c59
+      client_secret: 7247852df70a44fa96a7b1c623c9354d

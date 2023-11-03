@@ -8,6 +8,10 @@ const useLoadSongUrl = (song: Song) => {
 		return ''
 	}
 
+	if (song.song_path.startsWith('https://p.scdn.co') || song.song_path === '') {
+		return song.song_path
+	}
+
 	const { data: songData } = supabaseClient.storage
 		.from('songs')
 		.getPublicUrl(song.song_path)

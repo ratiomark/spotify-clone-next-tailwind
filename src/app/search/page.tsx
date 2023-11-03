@@ -13,7 +13,7 @@ interface SearchProps {
 }
 
 const Search = async ({ searchParams }: SearchProps) => {
-	const songs = await getSongsByTitle(searchParams.title)
+	// const songs = await getSongsByTitle(searchParams.title)
 	return (
 		<div
 			className='
@@ -31,7 +31,8 @@ const Search = async ({ searchParams }: SearchProps) => {
 					<SearchInput />
 				</div>
 			</Header>
-			<SearchContent songs={songs} />
+			<SearchContent />
+			{/* <SearchContent songs={songs} q={searchParams.title} /> */}
 		</div>
 	)
 }

@@ -1,5 +1,6 @@
 'use client'
 
+import { Track } from '@/shared/types/types'
 import {
 	ApolloClient,
 	ApolloProvider,
@@ -24,7 +25,7 @@ const typePolicies: TypePolicies = {
 						tracks: {
 							items: [
 								...existing?.tracks?.items,
-								...incoming?.tracks?.items,
+								...incoming?.tracks?.items
 								// ...existing?.search?.tracks?.items,
 								// ...incoming?.search?.tracks?.items,
 							],

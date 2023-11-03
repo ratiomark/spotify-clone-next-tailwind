@@ -6,7 +6,7 @@ import LikeButton from '@/components/LikeButton'
 import Spinner from '@/components/Spinner'
 import useOnPlay from '@/hooks/useOnPlay'
 import { convertTrackToSong } from '@/shared/helpers/convertObject'
-import { Song } from '@/shared/types/types'
+import { Song, Track } from '@/shared/types/types'
 import { gql, useQuery } from '@apollo/client'
 import { useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -46,31 +46,34 @@ const SearchContent = (props: SearchContentProps) => {
 	const searchParams = useSearchParams()
 	const q = searchParams.get('title')
 	const [offset, setOffset] = useState(0)
-	const { data, loading, error, fetchMore } = useQuery(search, {
+	const [isLoading, setIsLoading] = useState(false)
+	const { data, loading, error, fetchMore, refetch } = useQuery(search, {
 		variables: { q, offset },
 	})
 	const tracks = data?.search?.tracks?.items ?? []
-	const songs = tracks.map(convertTrackToSong)
+	const songs = tracks
+		.filter((track: Track) => {
+			if (track.preview_url) return true
+			return false
+		})
+		.map(convertTrackToSong)
 	const { ref, inView } = useInView({
-		/* Optional options */
 		threshold: 0.5,
 	})
-
-	useEffect(() => {
-		console.log('loading   ', loading)
-	}, [loading])
 
 	const onPlay = useOnPlay(songs)
 
 	useEffect(() => {
-		console.log('offset', offset)
-	}, [offset])
+		refetch({ variables: { q } })
+	}, [q])
 
 	const loadMoreSongs = async () => {
 		const newOffset = offset + 50
+		setIsLoading(true)
 		await fetchMore({
 			variables: { q, offset: newOffset },
 		})
+		setIsLoading(false)
 		setOffset(newOffset)
 	}
 
@@ -79,6 +82,25 @@ const SearchContent = (props: SearchContentProps) => {
 			loadMoreSongs()
 		}
 	}, [inView])
+
+	if (loading && q !== '') {
+		return (
+			<div
+				className='
+          flex 
+          w-full 
+          flex-col 
+          gap-y-2 
+          px-6 
+          text-neutral-400
+        '
+			>
+				<div className='flex min-h-[40px] w-full items-center justify-center '>
+					<Spinner />
+				</div>
+			</div>
+		)
+	}
 
 	if (songs.length === 0) {
 		return (
@@ -93,11 +115,6 @@ const SearchContent = (props: SearchContentProps) => {
         '
 			>
 				No songs found.
-				{loading && (
-					<div className='flex min-h-[40px] w-full items-center justify-center bg-slate-600'>
-						<Spinner />
-					</div>
-				)}
 			</div>
 		)
 	}
@@ -138,8 +155,8 @@ const SearchContent = (props: SearchContentProps) => {
 					)
 				}
 			})}
-			{loading && (
-				<div className='flex min-h-[40px] w-full items-center justify-center'>
+			{isLoading && (
+				<div className='flex min-h-[70px] w-full items-center justify-center'>
 					<Spinner />
 				</div>
 			)}

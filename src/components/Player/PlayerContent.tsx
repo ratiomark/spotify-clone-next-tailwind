@@ -194,7 +194,11 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
 		</>
 	)
 
-	const noMusicInYouCountry = <h3> Sorry, but there is no music </h3>
+	const noMusicInYouCountry = (
+		<div className='flex w-full items-center justify-center'>
+			<h3 className=''>Sorry, Spotify API has no mp3 file for this song</h3>
+		</div>
+	)
 
 	return (
 		<div

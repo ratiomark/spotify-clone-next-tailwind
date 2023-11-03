@@ -10,7 +10,7 @@ import Input from './Input'
 const SearchInput = () => {
 	const router = useRouter()
 	const [value, setValue] = useState('')
-	const debouncedValue = useDebouncedValue(value, 500)
+	const debouncedValue = useDebouncedValue(value, 300)
 
 	useEffect(() => {
 		const query = { title: debouncedValue }

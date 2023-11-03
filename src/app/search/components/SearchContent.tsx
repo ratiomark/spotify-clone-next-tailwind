@@ -1,18 +1,20 @@
-'use client';
+'use client'
 
 import MediaItemGQL from '@/components/Items/MediaItemGQL'
-import SongItem from '@/components/Items/SongItem';
-import LikeButton from '@/components/LikeButton';
-import useOnPlay from '@/hooks/useOnPlay';
-import { convertTrackToSong } from '@/shared/helpers/convertObject';
-import { Song } from '@/shared/types/types';
-import { gql, useQuery } from '@apollo/client';
-import { useSearchParams } from 'next/navigation';
+import SongItem from '@/components/Items/SongItem'
+import LikeButton from '@/components/LikeButton'
+import Spinner from '@/components/Spinner'
+import useOnPlay from '@/hooks/useOnPlay'
+import { convertTrackToSong } from '@/shared/helpers/convertObject'
+import { Song } from '@/shared/types/types'
+import { gql, useQuery } from '@apollo/client'
+import { useSearchParams } from 'next/navigation'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { useInView } from 'react-intersection-observer'
 
-
-const query = gql`
-	query MyQuery($q: String) {
-		search(q: $q) {
+const search = gql`
+	query MyQuery($q: String, $offset: Int) {
+		search(q: $q, offset: $offset) {
 			tracks {
 				items {
 					id
@@ -39,25 +41,44 @@ interface SearchContentProps {
 	q?: string
 }
 
-// track?.album?.images[0]?.url
-// track.artists[0]?.name ?? 'N\\A'
-// track.name
+// const SearchContent = ({ songs }: SearchContentProps) => {
 const SearchContent = (props: SearchContentProps) => {
-	// console.log(props)
 	const searchParams = useSearchParams()
 	const q = searchParams.get('title')
-	const { data, loading, error } = useQuery(query, { variables: { q } })
+	const [offset, setOffset] = useState(0)
+	const { data, loading, error, fetchMore } = useQuery(search, {
+		variables: { q, offset },
+	})
 	const tracks = data?.search?.tracks?.items ?? []
 	const songs = tracks.map(convertTrackToSong)
+	const { ref, inView } = useInView({
+		/* Optional options */
+		threshold: 0.5,
+	})
 
-	// console.log(songs)
-	// return <d
-	// const SearchContent = ({ songs }: SearchContentProps) => {
+	useEffect(() => {
+		console.log('loading   ', loading)
+	}, [loading])
+
 	const onPlay = useOnPlay(songs)
-	// return (<div>
-	// 	<h3>Тест</h3>
 
-	// </div>)
+	useEffect(() => {
+		console.log('offset', offset)
+	}, [offset])
+
+	const loadMoreSongs = async () => {
+		const newOffset = offset + 50
+		await fetchMore({
+			variables: { q, offset: newOffset },
+		})
+		setOffset(newOffset)
+	}
+
+	useEffect(() => {
+		if (inView) {
+			loadMoreSongs()
+		}
+	}, [inView])
 
 	if (songs.length === 0) {
 		return (
@@ -72,26 +93,56 @@ const SearchContent = (props: SearchContentProps) => {
         '
 			>
 				No songs found.
+				{loading && (
+					<div className='flex min-h-[40px] w-full items-center justify-center bg-slate-600'>
+						<Spinner />
+					</div>
+				)}
 			</div>
 		)
 	}
 
 	return (
 		<div className='flex w-full flex-col gap-y-2 px-6'>
-			{songs.map((song: Song) => (
-				<div
-					key={song.id}
-					className='flex w-full items-center gap-x-4'
-				>
-					<div className='flex-1'>
-						<MediaItemGQL
-							onClick={(id: string) => onPlay(id)}
-							data={song}
-						/>
-					</div>
-					<LikeButton songId={song.id} />
+			{songs.map((song: Song, index: number) => {
+				if (index === songs.length - 10) {
+					return (
+						<div
+							ref={ref}
+							key={song.id}
+							className='flex w-full items-center gap-x-4'
+						>
+							<div className='flex-1'>
+								<MediaItemGQL
+									onClick={(id: string) => onPlay(id)}
+									data={song}
+								/>
+							</div>
+							<LikeButton songId={song.id} />
+						</div>
+					)
+				} else {
+					return (
+						<div
+							key={song.id}
+							className='flex w-full items-center gap-x-4'
+						>
+							<div className='flex-1'>
+								<MediaItemGQL
+									onClick={(id: string) => onPlay(id)}
+									data={song}
+								/>
+							</div>
+							<LikeButton songId={song.id} />
+						</div>
+					)
+				}
+			})}
+			{loading && (
+				<div className='flex min-h-[40px] w-full items-center justify-center'>
+					<Spinner />
 				</div>
-			))}
+			)}
 		</div>
 	)
 }
